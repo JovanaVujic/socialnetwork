@@ -1,0 +1,8 @@
+{
+  "short_name": "My Network",
+  "name": "My Network with MERN stack",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
