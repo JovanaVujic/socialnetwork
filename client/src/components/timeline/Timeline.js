@@ -21,6 +21,7 @@ class Timeline extends Component {
   render() {
     const { posts, post_loading } = this.props.post;
     const { profile, loading } = this.props.profile;
+    const { user } = this.props.auth;
 
     let timelineContent;
     let headerContent;
@@ -28,7 +29,10 @@ class Timeline extends Component {
 
     if (profile !== null && !loading) {
       headerContent = <Header profile={profile} activeLink="Timeline" />;
-      createPostContent = <CreatePost profile={profile} />;
+
+      if (user.id === profile.user.id) {
+        createPostContent = <CreatePost profile={profile} />;
+      }
     }
 
     if (posts === null || post_loading) {
@@ -38,7 +42,7 @@ class Timeline extends Component {
         <div className="container">
           <div className="timeline">
             {headerContent}
-            <div id="page-contents">
+            <div id="page-contents" className="mt-5">
               <div className="row">
                 <div className="col-md-3" />
                 <div className="col-md-7">
@@ -64,7 +68,8 @@ Timeline.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  post: state.post
+  post: state.post, 
+  auth: state.auth
 });
 
 export default connect(

@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import isEmpty from '../../validation/isEmpty';
+import { connect } from 'react-redux';
+
+import {
+  deleteAccount
+} from '../../actions/profileActions';
 
 class ProfileActions extends Component {
+
+  deleteHandler = () => {
+    this.props.deleteAccount();
+  };
+
   render() {
     const { profileExists } = this.props;
 
@@ -30,9 +39,12 @@ class ProfileActions extends Component {
             </Link>
           </li>
           <li className="list-inline-item">
-            <Link to="/delete" className="btn btn-danger">
+            <button
+              type="button" className="btn btn-danger"
+              onClick={this.deleteHandler.bind(this)}
+            >
               <i className="far fa-trash-alt" /> Delete Profile
-            </Link>
+            </button>
           </li>
         </ul>
       );
@@ -43,7 +55,15 @@ class ProfileActions extends Component {
 }
 
 ProfileActions.propTypes = {
-  profileExists: PropTypes.bool.isRequired
+  profileExists: PropTypes.bool.isRequired,
+  deleteAccount: PropTypes.func.isRequired
 };
 
-export default ProfileActions;
+const mapStateToProps = state => ({
+  profile: state.profile,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps, {deleteAccount }
+)(ProfileActions);

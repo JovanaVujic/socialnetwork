@@ -32,6 +32,7 @@ class Images extends Component {
   };
 
   changeHandler = e => {
+    this.state.errors[e.target.name] = '';
     switch (e.target.name) {
       case 'image':
         this.setState({ image: e.target.files[0] });

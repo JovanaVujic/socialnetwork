@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//Create Album schema
 const AlbumSchema = Schema({
   user: {
     type: Schema.Types.ObjectId,

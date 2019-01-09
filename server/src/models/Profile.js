@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Create schema
+//Create Profile schema
 const ProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -9,7 +9,7 @@ const ProfileSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: '/images/default/avatar.jpg'
+    default: 'images/default/avatar.jpg'
   },
   info: {
     type: String
@@ -50,10 +50,6 @@ const ProfileSchema = new Schema({
   },
   interests: {
     type: [String]
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false
   },
   date: {
     type: Date,

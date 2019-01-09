@@ -64,6 +64,25 @@ export const getProfiles = () => dispatch => {
     );
 };
 
+// Get all friends profile
+export const getFriendsProfile = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/profile/friends')
+    .then(res => 
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
 export const createBasicInfo = (newProfile, history) => dispatch => {
   const config = {
     headers: {
@@ -73,9 +92,7 @@ export const createBasicInfo = (newProfile, history) => dispatch => {
 
   axios
     .post('/api/profile/basic-info', newProfile, config)
-    .then(res => {
-      history.push('./timeline-about');
-    })
+    .then(res => history.push(`/timeline-about/${res.data.user}`))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -104,7 +121,7 @@ export const createWorkExperience = newProfile => dispatch => {
 export const createSocials = (newProfile, history) => dispatch => {
   axios
     .post('/api/profile/socials', newProfile)
-    .then(res => history.push('./timeline-about'))
+    .then(res => history.push(`./timeline-about/${res.data.user}`))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -116,7 +133,7 @@ export const createSocials = (newProfile, history) => dispatch => {
 export const createInterests = (newProfile, history) => dispatch => {
   axios
     .post('/api/profile/interests', newProfile)
-    .then(res => history.push('./timeline-about'))
+    .then(res => history.push(`./timeline-about/${res.data.user}`))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -129,11 +146,11 @@ export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure?'))
     axios
       .delete('/api/profile')
-      .then(res =>
-        dispatch({
-          type: SET_CURRENT_USER,
-          payload: {}
-        })
+      .then(res => 
+          dispatch({
+            type: SET_CURRENT_USER,
+            payload: {}
+          })
       )
       .catch(err =>
         dispatch({

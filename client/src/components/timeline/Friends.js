@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from '../common/Loader';
 import Header from './Header';
-import ProfileActions from '../profile/ProfileActions';
 
 import { getProfileByUserId } from '../../actions/profileActions';
 import FriendList from './FriendList';

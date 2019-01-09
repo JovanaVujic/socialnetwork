@@ -1,18 +1,21 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport');
-// Load models
+
+const router = express.Router();
+
+// Load model
 const Friendship = require('../../models/Friendship');
 
 //GET requests
 
-// @route GET /api/friendships/akk
-// @desc GET all friendship for current user
-// @access Private
+//@route GET /api/friendships/all
+//@desc GET all friendship for current user
+//@access Private
 router.get(
   '/all',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    //Find all friendships for current user
     Friendship.find({
       $or: [{ fromUser: req.user.id }, { toUser: req.user.id }]
     })
@@ -23,13 +26,14 @@ router.get(
   }
 );
 
-// @route GET /api/friendships/friends
-// @desc GET friends for current user
-// @access Private
+//@route GET /api/friendships/friends
+//@desc GET friends for current user
+//@access Private
 router.get(
   '/friends',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    //Find all friend for current user
     Friendship.find({
       $or: [{ fromUser: req.user.id }, { toUser: req.user.id }],
       status: 'ACCEPTED'
@@ -39,13 +43,14 @@ router.get(
   }
 );
 
-// @route GET /api/friendships/user/:user_id
-// @desc GET friends by user
-// @access Private
+//@route GET /api/friendships/user/:user_id
+//@desc GET friends by user
+//@access Private
 router.get(
   '/friends/user/:user_id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    //Find friends for current user
     Friendship.find({
       $or: [{ fromUser: req.params.user_id }, { toUser: req.params.user.id }],
       status: 'ACCEPTED'
@@ -56,9 +61,10 @@ router.get(
 );
 
 //POST requests
-// @route POST /api/friendships/user/:user_id/status/:status
-// @desc Friendship route
-// @access Private
+
+//@route POST /api/friendships/user/:user_id/status/:status
+//@desc Friendship route
+//@access Private
 router.post(
   '/user/:user_id/status/:status',
   passport.authenticate('jwt', { session: false }),

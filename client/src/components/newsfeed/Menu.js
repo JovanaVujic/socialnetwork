@@ -14,7 +14,7 @@ class Menu extends Component {
               className={activeLink === 'MyNewsfeed' ? 'active' : ''}
             >
               <i className="far fa-newspaper text-red mr-2" />
-              My Newsfeed
+              Newsfeed
             </Link>
           </li>
           <li>

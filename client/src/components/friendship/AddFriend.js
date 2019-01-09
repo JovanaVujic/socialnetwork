@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+
+import init from '../../config/init';
 
 import isEmpty from '../../validation/isEmpty';
 import consts from '../../config/consts';
@@ -58,6 +61,7 @@ class AddFriend extends Component {
             status = consts.friendshipsStatus[item.status];
           }
         }
+        return item;
       });
     }
 
@@ -119,16 +123,16 @@ class AddFriend extends Component {
               <div className="friend-content" key={i}>
                 <div className="friend-container">
                   <img
-                    src={profile.avatar}
+                    src={init.uploadAvatarPath + profile.avatar}
                     alt=""
                     className="profile-photo-md float-left"
                   />
                   <div className="friend-detail">
                     <div className="user-info">
                       <h5>
-                        <a href="/timeline" className="profile-link">
+                        <Link to={`/timeline/${profile.user._id}`} className="profile-link">
                           {profile.user.username}
-                        </a>
+                        </Link>
                       </h5>
                       <div className="friend-action">
                         <div className="d-none">

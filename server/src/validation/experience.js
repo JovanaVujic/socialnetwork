@@ -28,6 +28,10 @@ module.exports = function experienceValidation(data) {
     }
   }
 
+  if (!Validator.isEmpty(data.from) && !Validator.isEmpty(data.to) && Validator.isAfter(data.from, data.to)) {
+    errors.to = messages.experience.greater.dataFrom;
+  }
+
   return {
     errors,
     isValid: isEmpty(errors)

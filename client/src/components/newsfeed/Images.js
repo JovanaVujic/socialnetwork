@@ -7,7 +7,7 @@ import Media from './Media';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getImages } from '../../actions/albumActions';
+import { getFriendsImages } from '../../actions/albumActions';
 import { getCurrentProfile } from '../../actions/profileActions';
 
 import Loader from '../common/Loader';
@@ -15,7 +15,7 @@ import Loader from '../common/Loader';
 class Images extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
-    this.props.getImages();
+    this.props.getFriendsImages();
   }
 
   render() {
@@ -58,7 +58,7 @@ Images.propTypes = {
   profile: PropTypes.object,
   getCurrentProfile: PropTypes.func,
   album: PropTypes.object.isRequired,
-  getImages: PropTypes.func.isRequired
+  getFriendsImages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -68,5 +68,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, getImages }
+  { getCurrentProfile, getFriendsImages }
 )(Images);

@@ -8,7 +8,7 @@ import { clearCurrentProfile } from '../../actions/profileActions';
 class Header extends Component {
   logoutHandler = e => {
     e.preventDefault();
-    this.props.clearCurrentProfile();
+    //this.props.clearCurrentProfile();
     this.props.logoutUser();
   };
 
@@ -41,7 +41,7 @@ class Header extends Component {
             <div className="row">
               <div className="navbar-header">
                 <Link className="navbar-brand" to="/">
-                  <img src="images/logo.png" alt="logo" />
+                  <img src="/images/logo.png" alt="logo" />
                 </Link>
               </div>
               <div className="navbar navbar-top-menu">

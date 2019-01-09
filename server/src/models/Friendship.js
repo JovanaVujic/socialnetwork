@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//Create Friendship schema
 const FriendshipSchema = Schema({
   fromUser: {
     type: Schema.Types.ObjectId,

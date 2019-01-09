@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
+//Set routes
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
@@ -11,14 +12,13 @@ const album = require('./routes/api/album');
 
 const app = express();
 
-//Body parser middleware
+//Load Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//DB config
+//Config database
 const db = require('./config/init').mongoURI;
-
-//DB connection
+//Database connection
 mongoose
   .connect(
     db,
@@ -27,7 +27,7 @@ mongoose
   .then(() => console.log('Successfully connect to MongoDB'))
   .catch(err => console.log(err));
 
-//Passport middleware
+//Load Passport middleware
 app.use(passport.initialize());
 require('./config/passport')(passport);
 

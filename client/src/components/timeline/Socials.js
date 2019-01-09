@@ -11,7 +11,7 @@ class Socials extends Component {
       if (profile.social.youtube) {
         ytContent = (
           <li className="list-inline-item">
-            <a href={profile.social.youtube}>
+            <a href={profile.social.youtube} target="_blank">
               <i className="fab fa-youtube" />
             </a>
           </li>
@@ -21,7 +21,7 @@ class Socials extends Component {
       if (profile.social.facebook) {
         fbContent = (
           <li className="list-inline-item">
-            <a href={profile.social.facebook}>
+            <a href={profile.social.facebook} target="_blank">
               <i className="fab fa-facebook" />
             </a>
           </li>
@@ -31,7 +31,7 @@ class Socials extends Component {
       if (profile.social.twitter) {
         twContent = (
           <li className="list-inline-item">
-            <a href={profile.social.twitter}>
+            <a href={profile.social.twitter} target="_blank">
               <i className="fab fa-twitter" />
             </a>
           </li>
@@ -41,7 +41,7 @@ class Socials extends Component {
       if (profile.social.instagram) {
         instContent = (
           <li className="list-inline-item">
-            <a href={profile.social.instagram}>
+            <a href={profile.social.instagram} target="_blank">
               <i className="fab fa-instagram" />
             </a>
           </li>

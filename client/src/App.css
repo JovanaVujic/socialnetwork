@@ -357,7 +357,6 @@ h5 .icon-in-title {
 
 .auth-form {
   width: 100%;
-  padding: 40px 30px;
   text-align: center;
 }
 
@@ -1476,8 +1475,17 @@ ul.album-photos li .btn-danger {
   margin-left: 50px;
 }
 
-.contact-us ul.social-icons {
-  margin-top: 20px;
+ul.social-icons .list-inline-item {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.no-friend-info {
+  text-align: center;
+}
+
+.no-friend-info h5 {
+  color: black;
 }
 
 /*==================================================

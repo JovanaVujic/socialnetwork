@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Create schema
+//Create User schema
 const UserSchema = new Schema({
   name: {
     first: {
@@ -22,7 +22,7 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  isOnline: {
+  isDeleted: {
     type: Boolean,
     default: false
   },

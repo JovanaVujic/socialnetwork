@@ -8,7 +8,7 @@ import {
 } from './actionTypes';
 
 // Get images
-export const getImages = () => dispatch => {
+export const getFriendsImages = () => dispatch => {
   dispatch(setImageLoading());
   axios
     .get('/api/album')

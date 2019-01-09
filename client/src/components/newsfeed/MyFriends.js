@@ -2,24 +2,33 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Loader from '../common/Loader';
 import ProfileCard from './ProfileCard';
 import Menu from './Menu';
 import CreatePost from '../post/CreatePost';
 import FriendList from './FriendList';
 
-import { getCurrentProfile } from '../../actions/profileActions';
+import { getCurrentProfile, getFriendsProfile } from '../../actions/profileActions';
 
 class MyFriends extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
+    this.props.getFriendsProfile();
   }
 
   render() {
-    const { profile } = this.props.profile;
+    const { profile, profiles, loading } = this.props.profile;
 
     let profileContent;
+    let friendsContent;
 
-    if (profile !== null) {
+    if (profiles === null || loading) {
+      friendsContent = <Loader />;
+    } else {
+      friendsContent = <FriendList friends={profiles} profile={profile}/>;
+    }
+
+    if (profile != null) {
       profileContent = <ProfileCard profile={profile} />;
     }
     return (
@@ -31,8 +40,8 @@ class MyFriends extends Component {
               <Menu activeLink="Friends" />
             </div>
             <div className="col-md-7">
-              <CreatePost />
-              <FriendList />
+              <CreatePost profile = {profile}/>
+              {friendsContent}
             </div>
           </div>
         </div>
@@ -43,14 +52,17 @@ class MyFriends extends Component {
 
 MyFriends.propTypes = {
   profile: PropTypes.object,
-  getCurrentProfile: PropTypes.func
+  profiles: PropTypes.array,
+  getCurrentProfile: PropTypes.func,
+  getFriendsProfile: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  profiles: state.profiles
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, getFriendsProfile }
 )(MyFriends);

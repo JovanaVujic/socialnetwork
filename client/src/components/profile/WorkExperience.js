@@ -40,7 +40,7 @@ class WorkExperience extends Component {
   componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
-    }
+    } 
   };
 
   changeHandler = e => {
@@ -77,7 +77,7 @@ class WorkExperience extends Component {
 
   render() {
     const { errors } = this.state;
-    const { profile, loading } = this.props.profile;
+    const { profile } = this.props.profile;
 
     let workExperienceList;
 

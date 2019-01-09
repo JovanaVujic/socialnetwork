@@ -54,12 +54,18 @@ module.exports = {
       instagram: 'Instagram URL is not a valid'
     }
   },
+  profiles: {
+    empty: 'There are no any profiles'
+  },
   experience: {
     required: {
       title: 'Job title is required',
       company: 'Company is required',
       from: 'Date from is required',
       to: 'Date to is required'
+    }, 
+    greater: {
+      dataFrom: 'Date To should be greater then Date From'
     }
   },
   posts: {
@@ -73,7 +79,7 @@ module.exports = {
     unlike: 'You didnt like this',
     notauthorized: 'User not authorized',
     length: {
-      post: 'Post must be between 10 and 300 characters'
+      post: 'Post must be between 5 and 300 characters'
     },
     required: {
       post: 'Text is required'

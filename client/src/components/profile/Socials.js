@@ -7,7 +7,6 @@ import isEmpty from '../../validation/isEmpty';
 
 import { createSocials, getCurrentProfile } from '../../actions/profileActions';
 
-import Loader from '../common/Loader';
 import ProfileMenu from './ProfileMenu';
 import Header from '../timeline/Header';
 import InputFieldset from '../common/InputFieldset';
@@ -85,7 +84,7 @@ class Socials extends Component {
 
   render() {
     const { errors } = this.state;
-    const { profile, loading } = this.props.profile;
+    const { profile } = this.props.profile;
 
     return (
       <div className="container">

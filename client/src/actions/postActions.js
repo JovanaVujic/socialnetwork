@@ -17,7 +17,7 @@ export const createPost = postData => dispatch => {
       'content-type': 'multipart/form-data'
     }
   };
-
+  
   dispatch(clearErrors());
   axios
     .post('/api/posts', postData, config)

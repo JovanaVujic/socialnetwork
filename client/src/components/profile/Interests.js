@@ -12,7 +12,6 @@ import {
   getCurrentProfile
 } from '../../actions/profileActions';
 
-import Loader from '../common/Loader';
 import ProfileMenu from './ProfileMenu';
 import Header from '../timeline/Header';
 import CheckboxGroupFieldset from '../common/CheckboxGroupFieldset';

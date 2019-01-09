@@ -7,12 +7,12 @@ module.exports = function postValidation(data) {
 
   data.text = !isEmpty(data.text) ? data.text : '';
 
-  if (!Validator.isLength(data.text, { min: 10, max: 300 })) {
-    errors.text = messages.posts.length.text;
+  if (!Validator.isLength(data.text, { min: 5, max: 300 })) {
+    errors.text = messages.posts.length.post;
   }
 
   if (Validator.isEmpty(data.text)) {
-    errors.text = messages.posts.required.text;
+    errors.text = messages.posts.required.post;
   }
 
   return {

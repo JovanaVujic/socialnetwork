@@ -27,7 +27,8 @@ const friendshipsStatusForActiveUser = Object.freeze({
 
 const friendshipsStatus = Object.freeze({
   REQUESTED: ['Accept friend', 'Reject request'],
-  ACCEPTED: ['Cancel friend']
+  ACCEPTED: ['Cancel friend'],
+  REJECTED: ['Request rejected']
 });
 
 const friendshipsAction = Object.freeze({

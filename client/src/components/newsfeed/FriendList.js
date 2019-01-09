@@ -1,37 +1,49 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import init from '../../config/init';
 
 class FriendList extends Component {
   render() {
-    return (
-      <div className="friend-list">
-        <div className="row">
-          <div className="col-md-6 col-sm-6">
+    const { friends, profile } = this.props;
+
+    let friendsContent;
+
+    if (friends != null) {
+      friendsContent = friends.map((friend, i) => (
+        <div className="col-md-6 col-sm-6" key={i}>
             <div className="friend-card">
-              <img
-                src="images/covers/1.jpg"
-                alt="profile"
+            <img
+                src={init.uploadAvatarPath + friend.avatar}
+                alt="Profile"
                 className="img-responsive cover"
               />
               <div className="card-info">
                 <img
-                  src="images/users/user-3.jpg"
+                  src={init.uploadAvatarPath + profile.avatar}
                   alt="user"
                   className="profile-photo-lg"
                 />
                 <div className="friend-info">
-                  <a href="#" className="pull-right text-green">
+                  <div className="pull-right text-green">
                     My Friend
-                  </a>
+                  </div>
                   <h5>
-                    <a href="timeline.html" className="profile-link">
-                      Sophia Lee
-                    </a>
+                    <Link to={`/timeline/${friend.user._id}`} className="profile-link">
+                    {friend.user.name.first}  {friend.user.name.last}
+                    </Link>
                   </h5>
-                  <p>Student at Harvard</p>
                 </div>
               </div>
             </div>
           </div>
+      ));
+    }
+
+    return (
+      <div className="friend-list">
+        <div className="row">
+          {friendsContent}
         </div>
       </div>
     );
