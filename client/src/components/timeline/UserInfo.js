@@ -6,11 +6,11 @@ import init from '../../config/init';
 class UserInfo extends Component {
   render() {
     const { profile } = this.props;
-    const { isAuthenticated, user } = this.props.auth;
 
-    const userfullName = isAuthenticated
-      ? user.name.first + ' ' + user.name.last
-      : '';
+    let userfullName;
+    if (profile != null && profile.user != null && profile.user.name != null) {
+      userfullName = profile.user.name.first + ' ' + profile.user.name.last;
+    }
 
     return (
       <div className="profile-info">

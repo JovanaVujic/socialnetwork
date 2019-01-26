@@ -130,9 +130,7 @@ class AddFriend extends Component {
                   <div className="friend-detail">
                     <div className="user-info">
                       <h5>
-                        <Link to={`/timeline/${profile.user._id}`} className="profile-link">
-                          {profile.user.username}
-                        </Link>
+                       {profile.user.username}
                       </h5>
                       <div className="friend-action">
                         <div className="d-none">

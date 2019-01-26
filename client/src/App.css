@@ -1805,9 +1805,12 @@ ul.social-icons .list-inline-item {
   position: relative;
 }
 
-.friend-content .friend-container .friend-detail .user-info h5,
+.friend-content .friend-container .friend-detail .user-info h5 {
+  position: absolute;
+  top: 6px;
+}
 .friend-content .friend-container .friend-detail .user-info p {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 .friend-content .friend-container .friend-detail .friend-text {
@@ -1818,7 +1821,7 @@ ul.social-icons .list-inline-item {
 .friend-content .friend-container .friend-detail .friend-action {
   position: absolute;
   right: 0;
-  top: 5px;
+  top: 0;
 }
 
 /*==================================================
@@ -1981,4 +1984,13 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.header-link {
+  color: #fff;
+}
+
+.header-link:hover {
+  color: #fff;
+  text-decoration: none;
 }

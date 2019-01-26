@@ -35,7 +35,7 @@ router.get(
          friends.push(req.user.id);
          //Find albums of current user`s friends
          Album.find({ user : { $in : friends }})
-            .populate('user', ['name', 'username', 'isDeleted'])
+            .populate('user', ['name'])
             .then(album => res.json(album))
             .catch(err => res.json(err));
       })

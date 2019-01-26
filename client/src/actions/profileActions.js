@@ -83,6 +83,25 @@ export const getFriendsProfile = () => dispatch => {
     );
 };
 
+// Get all friends profile
+export const getFriendsProfileByUser = (user_id) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/friends/${user_id}`)
+    .then(res => 
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
+      })
+    );
+};
+
 export const createBasicInfo = (newProfile, history) => dispatch => {
   const config = {
     headers: {

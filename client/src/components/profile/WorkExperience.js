@@ -69,7 +69,18 @@ class WorkExperience extends Component {
     };
 
     this.props.createWorkExperience(newExperience, this.props.history);
+    this.reset();
   };
+
+  reset = () => {
+    this.setState({
+      title: '',
+      company: '',
+      from: '',
+      to: '',
+      current: false
+    })
+  }
 
   deleteHandler = exp_id => {
     this.props.deleteExperience(exp_id);

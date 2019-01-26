@@ -14,7 +14,8 @@ class ProfileActions extends Component {
   };
 
   render() {
-    const { profileExists } = this.props;
+    const { user } = this.props.auth;
+    const { profileExists, userid } = this.props;
 
     let actionsContent;
 
@@ -29,7 +30,7 @@ class ProfileActions extends Component {
           </li>
         </ul>
       );
-    } else {
+    } else if (user.id === userid) {
       //if profile exists show EDIT and DELETE
       actionsContent = (
         <ul className="list-inline text-centered">
@@ -61,6 +62,7 @@ ProfileActions.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
+  auth: state.auth,
   errors: state.errors
 });
 

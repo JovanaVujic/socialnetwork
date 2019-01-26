@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import Loader from '../common/Loader';
 import Header from './Header';
 
-import { getProfileByUserId } from '../../actions/profileActions';
+import { getProfileByUserId, getFriendsProfileByUser } from '../../actions/profileActions';
+import { isFriends } from '../../actions/friendshipActions';
 import FriendList from './FriendList';
-
-import isEmpty from '../../validation/isEmpty';
 
 class Friends extends Component {
   componentDidMount = () => {
     if (this.props.match.params.user_id) {
       this.props.getProfileByUserId(this.props.match.params.user_id);
+      this.props.getFriendsProfileByUser(this.props.match.params.user_id);
     }
   };
 
@@ -23,11 +23,11 @@ class Friends extends Component {
   }
 
   render() {
-    const { profile, loading } = this.props.profile;
-
+    const { profile, profiles, loading } = this.props.profile;
+    
     let friendsContent;
 
-    if (profile === null || loading) {
+    if (profile === null || profiles === null || loading) {
       friendsContent = <Loader />;
     } else {
       friendsContent = (
@@ -39,9 +39,7 @@ class Friends extends Component {
                 <div className="col-md-3" />
                 <div className="col-md-7">
                   <div className="profile">
-                    <FriendList
-                      friends={!isEmpty(profile) ? profile.friends : []}
-                    />
+                    <FriendList friends={profiles} />
                   </div>
                 </div>
                 <div className="col-md-2 static" />
@@ -57,14 +55,17 @@ class Friends extends Component {
 
 Friends.propTypes = {
   profile: PropTypes.object.isRequired,
-  getProfileByUserId: PropTypes.func.isRequired
+  profiles: PropTypes.array.isRequired,
+  getProfileByUserId: PropTypes.func.isRequired,
+  getFriendsProfileByUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  profiles: state.profiles
 });
 
 export default connect(
   mapStateToProps,
-  { getProfileByUserId }
+  { getProfileByUserId, getFriendsProfileByUser }
 )(Friends);

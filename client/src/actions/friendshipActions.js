@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_FRIENDSHIPS, FRIENDSHIP_LOADING } from './actionTypes';
+import { GET_FRIENDSHIPS, FRIENDSHIP_LOADING, IS_FRIENDSHIPS } from './actionTypes';
 
 export const getAllFriendships = () => dispatch => {
   dispatch(setFriendshipLoading());
@@ -51,6 +51,24 @@ export const getFriendsByUser = user_id => dispatch => {
       dispatch({
         type: GET_FRIENDSHIPS,
         payload: null
+      })
+    );
+};
+
+export const isFriends = user_id => dispatch => {
+  dispatch(setFriendshipLoading());
+  axios
+    .get(`/api/friendships/friends/users/${user_id}}`)
+    .then(res =>
+      dispatch({
+        type: IS_FRIENDSHIPS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: IS_FRIENDSHIPS,
+        payload: false
       })
     );
 };

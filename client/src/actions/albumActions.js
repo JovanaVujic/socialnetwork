@@ -12,11 +12,12 @@ export const getFriendsImages = () => dispatch => {
   dispatch(setImageLoading());
   axios
     .get('/api/album')
-    .then(res =>
+    .then(res => {
       dispatch({
         type: GET_IMAGES,
         payload: res.data
       })
+    }
     )
     .catch(err =>
       dispatch({

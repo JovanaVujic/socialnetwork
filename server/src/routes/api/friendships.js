@@ -60,6 +60,32 @@ router.get(
   }
 );
 
+//@route GET /api/friendships/users/:user_id
+//@desc GET friends by logged user, and requested
+//@access Private
+router.get(
+  '/friends/users/:user_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    if (req.user.id === req.params.user_id) {
+      return;
+    }
+    //Find friends for current user
+    Friendship.findOne({
+      $or: [{ fromUser: req.user.id, toUser: req.params.user_id }, { toUser: req.user.id, fromUser: req.params.user_id }],
+      status: 'ACCEPTED'
+    })
+      .then(friendships => {
+        if (friendships != []) {  
+          return res.json(true);
+        } else {
+          return res.json(false);
+        }
+      })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
 //POST requests
 
 //@route POST /api/friendships/user/:user_id/status/:status

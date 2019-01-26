@@ -8,7 +8,6 @@ import { clearCurrentProfile } from '../../actions/profileActions';
 class Header extends Component {
   logoutHandler = e => {
     e.preventDefault();
-    //this.props.clearCurrentProfile();
     this.props.logoutUser();
   };
 
@@ -21,7 +20,11 @@ class Header extends Component {
 
     const authLinks = (
       <ul className="main-menu list-inline">
-        <li className="list-inline-item list-item-user">{userfullName}</li>
+        <li className="list-inline-item list-item-user">
+        <Link to={`/timeline-about/${user.id}`} className="header-link">
+            {userfullName}
+        </Link>
+        </li>
         <li className="list-inline-item ">
           <a
             href=""

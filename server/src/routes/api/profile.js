@@ -101,7 +101,39 @@ router.get(
     })
       .then(friendships => {
         if (friendships != null) {
-          friends = friendships.map(f => f.fromUser === req.user.id ? f.fromUser : f.toUser);
+          friends = friendships.map(f => f.fromUser === req.user.id ? f.toUser : f.fromUser);
+          return friends;
+        }
+      }).then(friends => {
+        if (friends != null) {
+          //Find profiles for user`s friends
+          Profile.find({ user : { $in : friends }})
+              .populate('user', ['name', 'isDeleted'])
+              .then(profiles => res.json(profiles))
+              .catch(err => res.status(400).json(err));
+        }
+      })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
+//@route GET /api/profile/friends/id
+//@desc GET profiles friends for current user
+//@access Private
+router.get(
+  '/friends/:user_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let friends = null;
+
+    //Find friends for current user
+    Friendship.find({
+      $or: [{ fromUser: req.params.user_id }, { toUser: req.params.user_id }],
+      status: 'ACCEPTED'
+    })
+      .then(friendships => {
+        if (friendships != null) {
+          friends = friendships.map(f => f.fromUser == req.params.user_id ? f.toUser : f.fromUser);
           return friends;
         }
       }).then(friends => {

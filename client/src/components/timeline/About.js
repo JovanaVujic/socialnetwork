@@ -53,7 +53,7 @@ class About extends Component {
                 <div className="col-md-3" />
                 <div className="col-md-7">
                   <div className="profile">
-                    <ProfileActions profileExists={!isEmpty(profile)} />
+                    <ProfileActions profileExists={!isEmpty(profile)} userid={profile.user._id} />
                     {profileContent}
                   </div>
                 </div>

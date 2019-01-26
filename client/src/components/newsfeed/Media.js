@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 
 import init from '../../config/init';
 import isEmpty from '../../validation/isEmpty';
+import Loader from '../common/Loader';
+import PropTypes from 'prop-types';
 
 class Media extends Component {
   render() {
     const { albums } = this.props;
 
-    let mediaContent;
+    let mediaContent = <Loader/>;
     let allAlbums = [];
-    if (!isEmpty(albums)) {
-      console.log(albums);
+    
+    if (!isEmpty(albums) && Array.isArray(albums)) {
       albums.map((album, i) =>
         album.images.map(image => {
           allAlbums.push({
@@ -44,7 +46,7 @@ class Media extends Component {
                       to={`/timeline-about/${album.user._id}`}
                       className="profile-link"
                     >
-                      {album.user.name.first + ' ' + album.user.name.last}
+                     {album.user.name.first + ' ' + album.user.name.last}
                     </Link>
                   </h6>
                 </div>
@@ -64,5 +66,9 @@ class Media extends Component {
     );
   }
 }
+
+Media.propTypes = {
+  albums: PropTypes.array.isRequired
+};
 
 export default Media;
