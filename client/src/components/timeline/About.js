@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEmpty from '../../validation/isEmpty';
-import { getProfileByUserId } from '../../actions/profileActions';
+import { getProfileByUserId, checkFriends } from '../../actions/profileActions';
 import Loader from '../common/Loader';
 import Header from './Header';
 import ProfileActions from '../profile/ProfileActions';
@@ -15,12 +15,17 @@ class About extends Component {
   componentDidMount = () => {
     if (this.props.match.params.user_id) {
       this.props.getProfileByUserId(this.props.match.params.user_id);
+      this.props.checkFriends(this.props.match.params.user_id);
     }
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
       this.props.history.push('/not-found');
+    }
+    
+    if(nextProps.profile.isFriends == false && this.props.profile.loading) {
+      this.props.history.push('/private-profile'); 
     }
   }
 
@@ -74,10 +79,11 @@ About.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  isFriends: state.isFriends
 });
 
 export default connect(
   mapStateToProps,
-  { getProfileByUserId }
+  { getProfileByUserId, checkFriends }
 )(About);

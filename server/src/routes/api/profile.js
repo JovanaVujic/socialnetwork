@@ -103,7 +103,7 @@ router.get(
     })
       .then(friendships => {
         if (friendships != null) {
-          friends = friendships.map(f => f.fromUser === req.user.id ? f.toUser : f.fromUser);
+          friends = friendships.map(f => f.fromUser == req.user.id ? f.toUser : f.fromUser);
           return friends;
         }
       }).then(friends => {
@@ -147,6 +147,26 @@ router.get(
               .catch(err => res.status(400).json(err));
         }
       })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
+//@route GET /api/friendships/users/:user_id
+//@desc GET friends by logged user, and requested
+//@access Private
+router.get(
+  '/friends/users/:user_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    if (req.user.id === req.params.user_id) {
+      return res.json(true);
+    }
+    //Find friends for current user
+    Friendship.findOne({
+      $or: [{ fromUser: req.user.id, toUser: req.params.user_id }, { toUser: req.user.id, fromUser: req.params.user_id }],
+      status: 'ACCEPTED'
+    })
+      .then(friendships => friendships != null ? res.json(true) : res.json(false))
       .catch(err => res.status(400).json(err));
   }
 );
@@ -367,7 +387,7 @@ router.delete(
     Profile.findOneAndRemove({ user: req.user.id })
       .then(() => {
         //Find user and set delete flag to true
-        /* User.findOneAndUpdate({ _id: req.user.id })
+        User.findOneAndUpdate({ _id: req.user.id })
           .then(user => {
             if (!user) {
               return res
@@ -380,23 +400,7 @@ router.delete(
               .then(user => res.json(user))
               .catch(err => res.json(err));
           })
-          .catch(err => res.status(400).json(err)); */
-
-          Album.findOneAndRemove({ user: req.user.id })
-              .then(() => console.log('Album deleted'))
-              .catch(err => res.status(400).json(err));
-
-          Post.deleteMany({ user: req.user.id })
-              .then(() => console.log('Posts deleted'))
-              .catch(err => res.status(400).json(err));
-
-          Friendship.deleteMany({ fromUser: req.user.id } , {toUser: req.user.id})
-              .then(() => console.log('Friendship deleted'))
-              .catch(err => res.status(400).json(err));
-    
-          User.findOneAndRemove({ _id: req.user.id })
-              .then(() => console.log('User deleted'))
-              .catch(err => res.status(400).json(err));
+          .catch(err => res.status(400).json(err)); 
       })
       .catch(err => res.json(err));
   }

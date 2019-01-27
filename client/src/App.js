@@ -15,6 +15,8 @@ import './App.css';
 import Header from './components/layout/Header';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
+import NotFound from './components/notFound/NotFound';
+import PrivateProfile from './components/privateProfile/PrivateProfile';
 import Timeline from './components/timeline/Timeline';
 import About from './components/timeline/About';
 import Album from './components/timeline/Album';
@@ -59,6 +61,8 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Signup} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/not-found" component={NotFound} />
+            <Route exact path="/private-profile" component={PrivateProfile} />
             <Switch>
               <PrivateRoute
                 exact

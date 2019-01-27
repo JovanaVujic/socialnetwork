@@ -6,7 +6,8 @@ import {
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
   SET_CURRENT_USER,
-  GET_PROFILES
+  GET_PROFILES,
+  IS_FRIENDSHIPS
 } from './actionTypes';
 
 export const getCurrentProfile = () => dispatch => {
@@ -98,6 +99,24 @@ export const getFriendsProfileByUser = (user_id) => dispatch => {
       dispatch({
         type: GET_PROFILES,
         payload: null
+      })
+    );
+};
+
+export const checkFriends = user_id => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/friends/users/${user_id}`)
+    .then(res =>
+      dispatch({
+        type: IS_FRIENDSHIPS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: IS_FRIENDSHIPS,
+        payload: false
       })
     );
 };

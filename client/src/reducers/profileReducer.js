@@ -2,12 +2,14 @@ import {
   GET_PROFILE,
   GET_PROFILES,
   PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE
+  CLEAR_CURRENT_PROFILE, 
+  IS_FRIENDSHIPS
 } from '../actions/actionTypes';
 
 const initialState = {
   profile: null,
   profiles: null,
+  isFriends: false,
   loading: false
 };
 
@@ -35,6 +37,12 @@ export default function(state = initialState, action) {
         profiles: action.payload,
         loading: false
       };
+    case IS_FRIENDSHIPS:
+      return {
+        ...state,
+        isFriends: action.payload,
+        loading: false
+      }
     default:
       return state;
   }

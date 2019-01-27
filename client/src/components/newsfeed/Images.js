@@ -11,7 +11,6 @@ import { getFriendsImages } from '../../actions/albumActions';
 import { getCurrentProfile } from '../../actions/profileActions';
 
 import Loader from '../common/Loader';
-import { print } from 'util';
 
 class Images extends Component {
   componentDidMount() {

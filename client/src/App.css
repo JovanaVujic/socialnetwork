@@ -355,7 +355,7 @@ h5 .icon-in-title {
   Signup Form
   ==================================================*/
 
-.auth-form {
+.auth-form, .not-found-form {
   width: 100%;
   text-align: center;
 }
@@ -370,6 +370,16 @@ h5 .icon-in-title {
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: 550px;
   margin: 0 auto 15px;
+}
+
+.not-found-form {
+  background-color: white;
+  padding: 50px 70px;
+  width: 550px;
+  margin: 0 auto 15px;
+  color: black;
+  font-size: 27px;
+  font-weight: bold;
 }
 
 .auth-form .form-wrapper .auth-text {

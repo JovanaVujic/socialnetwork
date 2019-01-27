@@ -47,7 +47,7 @@ router.post('/signup', (req, res) => {
   }
 
   //Find user by username
-  User.findOne({ username: req.body.username }).then(user => {
+  User.findOne({ username: req.body.username, isDeleted: false }).then(user => {
     if (user) {
       return res.status(400).json({ username: messages.users.exist.username });
     } else {

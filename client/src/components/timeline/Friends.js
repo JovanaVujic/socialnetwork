@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import Loader from '../common/Loader';
 import Header from './Header';
 
-import { getProfileByUserId, getFriendsProfileByUser } from '../../actions/profileActions';
-import { isFriends } from '../../actions/friendshipActions';
+import { getProfileByUserId, getFriendsProfileByUser, checkFriends } from '../../actions/profileActions';
 import FriendList from './FriendList';
 
 class Friends extends Component {
@@ -13,6 +12,7 @@ class Friends extends Component {
     if (this.props.match.params.user_id) {
       this.props.getProfileByUserId(this.props.match.params.user_id);
       this.props.getFriendsProfileByUser(this.props.match.params.user_id);
+      this.props.checkFriends(this.props.match.params.user_id);
     }
   };
 
@@ -20,6 +20,10 @@ class Friends extends Component {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
       this.props.history.push('/not-found');
     }
+    
+    if(nextProps.profile.isFriends == false && this.props.profile.loading) {
+      this.props.history.push('/private-profile'); 
+    } 
   }
 
   render() {
@@ -62,10 +66,11 @@ Friends.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  profiles: state.profiles
+  profiles: state.profiles,
+  isFriends: state.isFriends
 });
 
 export default connect(
   mapStateToProps,
-  { getProfileByUserId, getFriendsProfileByUser }
+  { getProfileByUserId, getFriendsProfileByUser, checkFriends }
 )(Friends);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getProfileByUserId } from '../../actions/profileActions';
+import { getProfileByUserId, checkFriends } from '../../actions/profileActions';
 import { getPostsByUserId } from '../../actions/postActions';
 
 import Loader from '../common/Loader';
@@ -15,8 +15,19 @@ class Timeline extends Component {
     if (this.props.match.params.user_id) {
       this.props.getProfileByUserId(this.props.match.params.user_id);
       this.props.getPostsByUserId(this.props.match.params.user_id);
+      this.props.checkFriends(this.props.match.params.user_id);
     }
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile.profile === null && this.props.profile.loading) {
+      this.props.history.push('/not-found');
+    }
+    
+    if(nextProps.profile.isFriends == false && this.props.profile.loading) {
+      this.props.history.push('/private-profile'); 
+    }
+  }
 
   render() {
     const { posts, post_loading } = this.props.post;
@@ -26,11 +37,13 @@ class Timeline extends Component {
     let timelineContent;
     let headerContent;
     let createPostContent;
+    let setMargin = true;
 
     if (profile !== null && !loading) {
       headerContent = <Header profile={profile} activeLink="Timeline" />;
 
       if (user.id === profile.user._id) {
+        setMargin = false;
         createPostContent = <CreatePost profile={profile} />;
       }
     }
@@ -42,7 +55,7 @@ class Timeline extends Component {
         <div className="container">
           <div className="timeline">
             {headerContent}
-            <div id="page-contents" className="mt-5">
+            <div id="page-contents" className={setMargin ? "mt-5" : ""}>
               <div className="row">
                 <div className="col-md-3" />
                 <div className="col-md-7">
@@ -69,10 +82,11 @@ Timeline.propTypes = {
 const mapStateToProps = state => ({
   profile: state.profile,
   post: state.post, 
-  auth: state.auth
+  auth: state.auth,
+  isFriends: state.isFriends
 });
 
 export default connect(
   mapStateToProps,
-  { getProfileByUserId, getPostsByUserId }
+  { getProfileByUserId, getPostsByUserId, checkFriends }
 )(Timeline);

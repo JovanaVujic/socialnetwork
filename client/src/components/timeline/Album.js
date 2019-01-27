@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getProfileByUserId } from '../../actions/profileActions';
+import { getProfileByUserId, checkFriends } from '../../actions/profileActions';
 import { getImagesByUserId } from '../../actions/albumActions';
 
 import Loader from '../common/Loader';
@@ -14,6 +14,7 @@ class Album extends Component {
     if (this.props.match.params.user_id) {
       this.props.getProfileByUserId(this.props.match.params.user_id);
       this.props.getImagesByUserId(this.props.match.params.user_id);
+      this.props.checkFriends(this.props.match.params.user_id);
     }
   };
 
@@ -21,6 +22,10 @@ class Album extends Component {
     if (nextProps.profile.profile === null && this.props.profile.loading) {
       this.props.history.push('/not-found');
     }
+
+    if(nextProps.profile.isFriends == false && this.props.profile.loading) {
+      this.props.history.push('/private-profile'); 
+    } 
   }
 
   render() {
@@ -68,10 +73,11 @@ Album.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.profile,
-  album: state.album
+  album: state.album, 
+  isFriends: state.isFriends
 });
 
 export default connect(
   mapStateToProps,
-  { getProfileByUserId, getImagesByUserId }
+  { getProfileByUserId, getImagesByUserId, checkFriends }
 )(Album);

@@ -55,24 +55,6 @@ export const getFriendsByUser = user_id => dispatch => {
     );
 };
 
-export const isFriends = user_id => dispatch => {
-  dispatch(setFriendshipLoading());
-  axios
-    .get(`/api/friendships/friends/users/${user_id}}`)
-    .then(res =>
-      dispatch({
-        type: IS_FRIENDSHIPS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: IS_FRIENDSHIPS,
-        payload: false
-      })
-    );
-};
-
 export const createFriendship = (user_id, status) => dispatch => {
   axios
     .post(`/api/friendships/user/${user_id}/status/${status}`)
