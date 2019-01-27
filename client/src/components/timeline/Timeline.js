@@ -30,7 +30,7 @@ class Timeline extends Component {
     if (profile !== null && !loading) {
       headerContent = <Header profile={profile} activeLink="Timeline" />;
 
-      if (user.id === profile.user.id) {
+      if (user.id === profile.user._id) {
         createPostContent = <CreatePost profile={profile} />;
       }
     }

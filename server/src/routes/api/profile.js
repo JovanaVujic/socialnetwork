@@ -11,6 +11,8 @@ const upload = require('../../utils/upload');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Friendship = require('../../models/Friendship');
+const Post = require('../../models/Post');
+const Album = require('../../models/Album');
 
 //Load validations
 const basicInfoValidation = require('../../validation/basicInfo');
@@ -52,7 +54,7 @@ router.get('/user/:user_id', passport.authenticate('jwt', { session: false }),
 (req, res) => {
   //Find profile by id
   Profile.findOne({ user: req.params.user_id })
-    .populate('user', ['name', 'username', 'isDeleted'])
+    .populate('user', ['name', 'username'])
     .then(profile => {
       if (!profile) {
         return res
@@ -365,7 +367,7 @@ router.delete(
     Profile.findOneAndRemove({ user: req.user.id })
       .then(() => {
         //Find user and set delete flag to true
-        User.findOneAndUpdate({ _id: req.user.id })
+        /* User.findOneAndUpdate({ _id: req.user.id })
           .then(user => {
             if (!user) {
               return res
@@ -378,7 +380,23 @@ router.delete(
               .then(user => res.json(user))
               .catch(err => res.json(err));
           })
-          .catch(err => res.status(400).json(err));
+          .catch(err => res.status(400).json(err)); */
+
+          Album.findOneAndRemove({ user: req.user.id })
+              .then(() => console.log('Album deleted'))
+              .catch(err => res.status(400).json(err));
+
+          Post.deleteMany({ user: req.user.id })
+              .then(() => console.log('Posts deleted'))
+              .catch(err => res.status(400).json(err));
+
+          Friendship.deleteMany({ fromUser: req.user.id } , {toUser: req.user.id})
+              .then(() => console.log('Friendship deleted'))
+              .catch(err => res.status(400).json(err));
+    
+          User.findOneAndRemove({ _id: req.user.id })
+              .then(() => console.log('User deleted'))
+              .catch(err => res.status(400).json(err));
       })
       .catch(err => res.json(err));
   }
